@@ -35,7 +35,7 @@ public class Tags extends AbstractTableModel implements  ITab, IMessageEditorCon
         this.helpers = help;
 
         // 设置我们的分机名
-        callbacks.setExtensionName("Custom logger");
+        callbacks.setExtensionName("Burp_VulPscan");
 
         // 创建我们的用户界面
         SwingUtilities.invokeLater(new Runnable() {
@@ -95,7 +95,7 @@ public class Tags extends AbstractTableModel implements  ITab, IMessageEditorCon
 
     @Override
     public String getTabCaption() {
-        return "Logger";
+        return "Burp_VulPscan";
     }
 
     @Override

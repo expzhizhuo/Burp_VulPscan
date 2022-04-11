@@ -31,8 +31,7 @@ public class BurpExtender implements IBurpExtender, IHttpListener {
         this.log = tags.log;
         callbacks.registerHttpListener(this);
 
-        // 设置我们的分机名
-        callbacks.setExtensionName("Burp_VulPscan");
+
         callbacks.printOutput("By:F6JO\nGithub: https://github.com/F6JO\n\nVulnerability list:\n    CVE-2022-22947");
     }
 
