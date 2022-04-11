@@ -50,28 +50,25 @@ public class BurpExtender implements IBurpExtender, IHttpListener {
             boolean panduan = false;
 
 
-
             if (!spring_CVE_2022_22947_urls.contains(url)) {
                 spring_CVE_2022_22947_urls.add(url);
                 IHttpRequestResponse jieguo = spring_CVE_2022_22947.poc(url, messageInfo, helpers, callbacks);
-
-                if (jieguo != null) {
+                int zhuangtai = helpers.analyzeResponse(jieguo.getResponse()).getStatusCode();
+                if (jieguo != null && zhuangtai >= 200 &&
+                        zhuangtai < 300 &&
+                        helpers.bytesToString(jieguo.getResponse()).contains("AddResponseHeader Result")) {
                     NewMessageInfo = jieguo;
                     Method = helpers.analyzeRequest(NewMessageInfo.getRequest()).getMethod();
-                    Status_code = helpers.analyzeResponse(NewMessageInfo.getResponse()).getStatusCode();
+                    Status_code = zhuangtai;
                     Vul = "Spring CVE-2022-22947";
                     panduan = true;
                     id += 1;
-                    // 创建包含消息详细信息的新日志条目
 
                 }
             }
 
 
-
-
-
-            if (panduan){
+            if (panduan) {
                 synchronized (log) {
                     int row = log.size();
                     // id url RequestMothed StatusCode Vul Time
@@ -97,18 +94,17 @@ public class BurpExtender implements IBurpExtender, IHttpListener {
 
     public String Handle_URL(String url) {
         int weizhi = url.lastIndexOf(":");
-        if (weizhi != -1) {
-            if (url.charAt(weizhi + 2) == '/') {
-                url = url.substring(0, weizhi + 2);
-            } else if (url.charAt(weizhi + 3) == '/') {
-                url = url.substring(0, weizhi + 3);
-            } else if (url.charAt(weizhi + 4) == '/') {
-                url = url.substring(0, weizhi + 4);
-            }
-            if (url.endsWith("/")) {
-                url = url.substring(0, url.length() - 1);
+        for (int i = 0; i < 10; i++) {
+            if (url.charAt(weizhi + i) == '/') {
+                url = url.substring(0, weizhi + i);
+                break;
             }
         }
+
+        if (url.endsWith("/")) {
+            url = url.substring(0, url.length() - 1);
+        }
+        //        callbacks.printOutput(url);
         return url;
     }
 }
